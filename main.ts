@@ -39,19 +39,19 @@ function updateVelocity () {
     -0.7071067812,
     -0.9238795325
     ]
-    mySprite.vx = xv[direction] * speed
-    mySprite.vy = yv[direction] * speed
+    playerCarSprite.vx = xv[direction] * speed
+    playerCarSprite.vy = yv[direction] * speed
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     direction += 1
     updateEverything()
 })
 function updateSprite () {
-    horizontalSpeed = Math.abs(mySprite.vx)
-    verticalSpeed = Math.abs(mySprite.vy)
+    horizontalSpeed = Math.abs(playerCarSprite.vx)
+    verticalSpeed = Math.abs(playerCarSprite.vy)
     if (horizontalSpeed > verticalSpeed) {
-        if (mySprite.vx > 0) {
-            mySprite.setImage(img`
+        if (playerCarSprite.vx > 0) {
+            playerCarSprite.setImage(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . 2 2 2 2 2 2 2 2 . . . . 
                 . . . 2 4 2 2 2 2 2 2 c 2 . . . 
@@ -69,8 +69,8 @@ function updateSprite () {
                 . . . f f f . . . . f f f f . . 
                 . . . . . . . . . . . . . . . . 
                 `)
-        } else if (mySprite.vx < 0) {
-            mySprite.setImage(img`
+        } else if (playerCarSprite.vx < 0) {
+            playerCarSprite.setImage(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . 2 2 2 2 2 2 2 2 . . 
                 . . . . . 2 c 2 2 2 2 2 2 4 2 . 
@@ -90,8 +90,8 @@ function updateSprite () {
                 `)
         }
     } else if (verticalSpeed > horizontalSpeed) {
-        if (mySprite.vy < 0) {
-            mySprite.setImage(img`
+        if (playerCarSprite.vy < 0) {
+            playerCarSprite.setImage(img`
                 . . . . . . e e c c e e . . . . 
                 . . . . . e 2 2 2 2 2 2 e . . . 
                 . . . . 2 c 2 2 2 2 2 2 c 2 . . 
@@ -110,7 +110,7 @@ function updateSprite () {
                 . . . . f f . . . . . . f f . . 
                 `)
         } else {
-            mySprite.setImage(img`
+            playerCarSprite.setImage(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . 2 2 2 2 2 2 . . . . 
                 . . . . . 2 2 4 4 2 2 2 2 . . . 
@@ -142,9 +142,9 @@ let yv: number[] = []
 let xv: number[] = []
 let direction = 0
 let speed = 0
-let mySprite: Sprite = null
+let playerCarSprite: Sprite = null
 tiles.setTilemap(tilemap`level`)
-mySprite = sprites.create(img`
+playerCarSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     . . . . 2 2 2 2 2 2 2 2 . . . . 
     . . . 2 4 2 2 2 2 2 2 c 2 . . . 
@@ -162,7 +162,7 @@ mySprite = sprites.create(img`
     . . . f f f . . . . f f f f . . 
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
-scene.cameraFollowSprite(mySprite)
+scene.cameraFollowSprite(playerCarSprite)
 speed = 100
 direction = 4
 updateVelocity()

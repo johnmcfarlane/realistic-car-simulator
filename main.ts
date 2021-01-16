@@ -1,9 +1,14 @@
+scene.onHitWall(SpriteKind.Player, function (sprite, location) {
+    playerCarSprite.startEffect(effects.disintegrate)
+    playerCarSprite.startEffect(effects.fire)
+    game.over(false)
+})
 controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
     direction += -1
     updateEverything()
 })
 function updateVelocity () {
-    xv = [
+    xva = [
     0,
     0.3826834324,
     0.7071067812,
@@ -21,7 +26,7 @@ function updateVelocity () {
     -0.7071067812,
     -0.3826834324
     ]
-    yv = [
+    yva = [
     -1,
     -0.9238795325,
     -0.7071067812,
@@ -39,12 +44,15 @@ function updateVelocity () {
     -0.7071067812,
     -0.9238795325
     ]
-    playerCarSprite.vx = xv[direction] * speed
-    playerCarSprite.vy = yv[direction] * speed
+    playerCarSprite.vx = xva[direction] * speed
+    playerCarSprite.vy = yva[direction] * speed
 }
 controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
     direction += 1
     updateEverything()
+})
+scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath5, function (sprite, location) {
+    speed = 100
 })
 function updateSprite () {
     horizontalSpeed = Math.abs(playerCarSprite.vx)
@@ -131,15 +139,18 @@ function updateSprite () {
         }
     }
 }
+scene.onOverlapTile(SpriteKind.Player, sprites.castle.tileGrass1, function (sprite, location) {
+    speed = 35
+})
 function updateEverything () {
     direction = (direction + 16) % 16
-    updateSprite()
     updateVelocity()
+    updateSprite()
 }
 let verticalSpeed = 0
 let horizontalSpeed = 0
-let yv: number[] = []
-let xv: number[] = []
+let yva: number[] = []
+let xva: number[] = []
 let direction = 0
 let speed = 0
 let playerCarSprite: Sprite = null

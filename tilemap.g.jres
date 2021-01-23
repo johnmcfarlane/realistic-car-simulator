@@ -31,7 +31,8 @@
             "sprites.builtin.forestTiles7",
             "sprites.builtin.forestTiles14",
             "sprites.builtin.forestTiles15"
-        ]
+        ],
+        "displayName": "level"
     },
     "*": {
         "mimeType": "image/x-mkcd-f4",

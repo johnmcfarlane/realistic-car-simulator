@@ -3,10 +3,6 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     playerCarSprite.startEffect(effects.fire)
     game.over(false)
 })
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    direction += -1
-    updateEverything()
-})
 function updateVelocity () {
     xva = [
     0,
@@ -44,15 +40,11 @@ function updateVelocity () {
     -0.7071067812,
     -0.9238795325
     ]
-    playerCarSprite.vx = xva[direction] * speed
-    playerCarSprite.vy = yva[direction] * speed
+    playerCarSprite.ax = xva[direction] * thrust
+    playerCarSprite.ay = yva[direction] * thrust
 }
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    direction += 1
-    updateEverything()
-})
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath5, function (sprite, location) {
-    speed = 100
+	
 })
 function updateSprite () {
     horizontalSpeed = Math.abs(playerCarSprite.vx)
@@ -140,19 +132,19 @@ function updateSprite () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tileGrass1, function (sprite, location) {
-    speed = 35
+    playerCarSprite.fx = 0.5
+    playerCarSprite.fy = 0.5
 })
 function updateEverything () {
-    direction = (direction + 16) % 16
     updateVelocity()
     updateSprite()
 }
 let verticalSpeed = 0
 let horizontalSpeed = 0
+let thrust = 0
 let yva: number[] = []
 let xva: number[] = []
 let direction = 0
-let speed = 0
 let playerCarSprite: Sprite = null
 tiles.setTilemap(tilemap`level`)
 playerCarSprite = sprites.create(img`
@@ -174,6 +166,23 @@ playerCarSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
 scene.cameraFollowSprite(playerCarSprite)
-speed = 100
+let speed = 0
 direction = 4
 updateVelocity()
+game.onUpdateInterval(100, function () {
+    if (controller.down.isPressed()) {
+        thrust = -50
+    } else if (controller.up.isPressed()) {
+        thrust = 50
+    } else {
+        thrust = 0
+    }
+    if (controller.left.isPressed()) {
+        direction += -1
+    }
+    if (controller.right.isPressed()) {
+        direction += 1
+    }
+    direction = (direction + 16) % 16
+    updateEverything()
+})

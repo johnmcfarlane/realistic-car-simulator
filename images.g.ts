@@ -309,24 +309,6 @@ namespace myImages {
 . . . f f f . . . . f f f f . . 
 . . . . . . . . . . . . . . . . 
 `;
-            case "image18":return img`
-. . . . . . . . . . . . . . . . 
-. . . . . . 2 2 2 2 2 2 2 2 . . 
-. . . . . 2 c 2 2 2 2 2 2 4 2 . 
-. . . . 2 c c 2 2 2 2 2 2 4 c 2 
-. . d 2 4 c c 2 4 4 4 4 4 4 c c 
-. d 2 2 4 c b e e e e e e e 2 c 
-. 2 2 2 4 b e e b b b e b b e 2 
-. 2 2 2 2 2 e b b b b e b b b e 
-. 2 2 2 2 e 2 2 2 2 2 e 2 2 2 e 
-. 2 d d 2 e f e e e f e e e e e 
-. d d 2 e e e f e e f e e e e e 
-. e e e e e e e f f f e e e e e 
-. e e e e f f f e e e e f f f f 
-. . . e f f f f f e e f f f f f 
-. . . . f f f f . . . . f f f . 
-. . . . . . . . . . . . . . . . 
-`;
             case "image19":return img`
 . . . . . . e e c c e e . . . . 
 . . . . . e 2 2 2 2 2 2 e . . . 
@@ -362,6 +344,42 @@ namespace myImages {
 . . . . 2 d d 2 2 2 2 d d 2 f . 
 . . . . f 2 d 2 2 2 2 d 2 f . . 
 . . . . . e 2 2 2 2 2 2 e . . . 
+`;
+            case "image21":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . 2 2 2 2 2 2 2 2 . . 
+. . . . . 2 c 2 2 2 2 2 2 4 2 . 
+. . . . 2 c c 2 2 2 2 2 2 4 c 2 
+. . d 2 4 c c 2 4 4 4 4 4 4 c c 
+. d 2 2 4 c b e e e e e e e 2 c 
+. 2 2 2 4 b e e b b b e b b e 2 
+. 2 2 2 2 2 e b b b b e b b b e 
+. 2 2 2 2 e 2 2 2 2 2 e 2 2 2 e 
+. 2 d d 2 e f e e e f e e e e e 
+. d d 2 e e e f e e f e e e e e 
+. e e e e e e e f f f e e e e e 
+. e e e e f f f e e e e f f f f 
+. . . e f f f f f e e f f f f f 
+. . . . f f f f . . . . f f f . 
+. . . . . . . . . . . . . . . . 
+`;
+            case "image18":return img`
+. . . . . . . . . . . . . . . . 
+. . . . . . 2 2 2 2 2 2 2 2 . . 
+. . . . . 2 c 2 2 2 2 2 2 4 2 . 
+. . . . 2 c c 2 2 2 2 2 2 4 c 2 
+. . d 2 4 c c 2 4 4 4 4 4 4 c c 
+. d 2 2 4 c b e e e e e e e 2 c 
+. 2 2 2 4 b e e b b b e b b e 2 
+. 2 2 2 2 2 e b b b b e b b b e 
+. 2 2 2 2 e 2 2 2 2 2 e 2 2 2 e 
+. 2 d d 2 e f e e e f e e e e e 
+. d d 2 e e e f e e f e e e e e 
+. e e e e e e e f f f e e e e e 
+. e e e e f f f e e e e f f f f 
+. . . e f f f f f e e f f f f f 
+. . . . f f f f . . . . f f f . 
+. . . . . . . . . . . . . . . . 
 `;
         }
         return null;

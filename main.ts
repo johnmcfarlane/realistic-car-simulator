@@ -3,10 +3,6 @@ scene.onHitWall(SpriteKind.Player, function (sprite, location) {
     playerCarSprite.startEffect(effects.fire)
     game.over(false)
 })
-controller.left.onEvent(ControllerButtonEvent.Pressed, function () {
-    direction += -1
-    updateEverything()
-})
 function updateVelocity () {
     xva = [
     0,
@@ -44,21 +40,19 @@ function updateVelocity () {
     -0.7071067812,
     -0.9238795325
     ]
-    playerCarSprite.vx = xva[direction] * speed
-    playerCarSprite.vy = yva[direction] * speed
+    thrust_x = xva[direction]
+    thrust_y = yva[direction]
+    playerCarSprite.ax = thrust_x * thrust
+    playerCarSprite.ay = thrust_y * thrust
 }
-controller.right.onEvent(ControllerButtonEvent.Pressed, function () {
-    direction += 1
-    updateEverything()
-})
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tilePath5, function (sprite, location) {
-    speed = 100
+    surfaceMultiplier = 0.75
 })
 function updateSprite () {
-    horizontalSpeed = Math.abs(playerCarSprite.vx)
-    verticalSpeed = Math.abs(playerCarSprite.vy)
+    horizontalSpeed = Math.abs(thrust_x)
+    verticalSpeed = Math.abs(thrust_y)
     if (horizontalSpeed > verticalSpeed) {
-        if (playerCarSprite.vx > 0) {
+        if (thrust_x > 0) {
             playerCarSprite.setImage(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . 2 2 2 2 2 2 2 2 . . . . 
@@ -77,7 +71,7 @@ function updateSprite () {
                 . . . f f f . . . . f f f f . . 
                 . . . . . . . . . . . . . . . . 
                 `)
-        } else if (playerCarSprite.vx < 0) {
+        } else if (thrust_x < 0) {
             playerCarSprite.setImage(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . 2 2 2 2 2 2 2 2 . . 
@@ -98,7 +92,7 @@ function updateSprite () {
                 `)
         }
     } else if (verticalSpeed > horizontalSpeed) {
-        if (playerCarSprite.vy < 0) {
+        if (thrust_y < 0) {
             playerCarSprite.setImage(img`
                 . . . . . . e e c c e e . . . . 
                 . . . . . e 2 2 2 2 2 2 e . . . 
@@ -117,7 +111,7 @@ function updateSprite () {
                 . . . f f e e e e e e e e f f . 
                 . . . . f f . . . . . . f f . . 
                 `)
-        } else {
+        } else if (thrust_y > 0) {
             playerCarSprite.setImage(img`
                 . . . . . . . . . . . . . . . . 
                 . . . . . . 2 2 2 2 2 2 . . . . 
@@ -140,19 +134,21 @@ function updateSprite () {
     }
 }
 scene.onOverlapTile(SpriteKind.Player, sprites.castle.tileGrass1, function (sprite, location) {
-    speed = 35
+    surfaceMultiplier = 0.5
 })
 function updateEverything () {
-    direction = (direction + 16) % 16
     updateVelocity()
     updateSprite()
 }
 let verticalSpeed = 0
 let horizontalSpeed = 0
+let surfaceMultiplier = 0
+let thrust = 0
+let thrust_y = 0
+let thrust_x = 0
 let yva: number[] = []
 let xva: number[] = []
 let direction = 0
-let speed = 0
 let playerCarSprite: Sprite = null
 tiles.setTilemap(tilemap`level`)
 playerCarSprite = sprites.create(img`
@@ -174,6 +170,27 @@ playerCarSprite = sprites.create(img`
     . . . . . . . . . . . . . . . . 
     `, SpriteKind.Player)
 scene.cameraFollowSprite(playerCarSprite)
-speed = 100
+let speed = 0
 direction = 4
 updateVelocity()
+game.onUpdateInterval(100, function () {
+    if (controller.down.isPressed()) {
+        thrust = -200
+    } else if (controller.up.isPressed()) {
+        thrust = 200
+    } else {
+        thrust = 0
+    }
+    if (controller.left.isPressed()) {
+        direction += -1
+    }
+    if (controller.right.isPressed()) {
+        direction += 1
+    }
+    direction = (direction + 16) % 16
+    playerCarSprite.setVelocity(playerCarSprite.vx * surfaceMultiplier, playerCarSprite.vy * surfaceMultiplier)
+    updateEverything()
+    console.logValue("fx", playerCarSprite.fx)
+    console.logValue("ax", playerCarSprite.ax)
+    console.logValue("vx", playerCarSprite.vx)
+})
